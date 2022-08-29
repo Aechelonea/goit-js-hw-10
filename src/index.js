@@ -9,7 +9,7 @@ const countriesList = document.querySelector('.country-list');
 const countryInfo = document.querySelector('.country-info');
 const DEBOUNCE_DELAY = 300;
 
-function createCountriesList(countries) {
+async function createCountriesList(countries) {
   let countriesListElement = '';
   for (country of countries) {
     countriesListElement += `
@@ -55,7 +55,6 @@ searchBox.addEventListener(
     try {
       if (e.target.value.length < 1) return;
       const countriesFound = await fetchCountries(e.target.value.trim());
-      console.log(countriesFound);
 
       if (countriesFound.length > 10) {
         return Notiflix.Notify.info(
@@ -64,10 +63,8 @@ searchBox.addEventListener(
       }
 
       if (countriesFound.length > 1) {
-        countriesList.insertAdjacentHTML(
-          'afterbegin',
-          createCountriesList(countriesFound)
-        );
+        let countriesListHtml = await createCountriesList(countriesFound);
+        countriesList.insertAdjacentHTML('afterbegin', countriesListHtml);
         let countryListed = document.querySelectorAll('.country-listed');
         for (country of countryListed) {
           country.addEventListener('click', event => {
