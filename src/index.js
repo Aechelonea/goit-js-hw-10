@@ -9,13 +9,14 @@ const countriesList = document.querySelector('.country-list');
 const countryInfo = document.querySelector('.country-info');
 const DEBOUNCE_DELAY = 300;
 
-async function createCountriesList(countries) {
+function createCountriesList(countries) {
   let countriesListElement = '';
+  console.log('createCountriesList');
   for (country of countries) {
     countriesListElement += `
     <li class="country-listed">
-        <img src="${country.flags.svg}"/>
-        <span>${country.name.common.trim()}</span>
+    <img src="${country.flags.svg}"/>
+    <span>${country.name.common.trim()}</span>
     </li>
     `;
   }
@@ -61,10 +62,12 @@ searchBox.addEventListener(
           'Too many matches found. Please enter a more specific name.'
         );
       }
-
+      JSON.stringify(countriesFound.length);
       if (countriesFound.length > 1) {
-        let countriesListHtml = await createCountriesList(countriesFound);
-        countriesList.insertAdjacentHTML('afterbegin', countriesListHtml);
+        countriesList.insertAdjacentHTML(
+          'afterbegin',
+          createCountriesList(countriesFound)
+        );
         let countryListed = document.querySelectorAll('.country-listed');
         for (country of countryListed) {
           country.addEventListener('click', event => {
