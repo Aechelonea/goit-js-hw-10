@@ -62,7 +62,7 @@ searchBox.addEventListener(
           'Too many matches found. Please enter a more specific name.'
         );
       }
-      JSON.stringify(countriesFound.length);
+      console.log(JSON.stringify(countriesFound.length));
       if (countriesFound.length > 1) {
         countriesList.insertAdjacentHTML(
           'afterbegin',
