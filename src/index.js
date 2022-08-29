@@ -55,11 +55,13 @@ searchBox.addEventListener(
     try {
       if (e.target.value.length < 1) return;
       const countriesFound = await fetchCountries(e.target.value.trim());
+      console.log(countriesFound);
 
-      if (countriesFound.length > 10)
+      if (countriesFound.length > 10) {
         return Notiflix.Notify.info(
           'Too many matches found. Please enter a more specific name.'
         );
+      }
 
       if (countriesFound.length > 1) {
         countriesList.insertAdjacentHTML(
